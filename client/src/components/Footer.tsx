@@ -108,7 +108,7 @@ export default function Footer() {
               <a href="https://www.linkedin.com/company/hawkstone-global-solutions" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0F1A21] flex items-center justify-center text-gray-400 hover:text-[#FFB000] hover:bg-[#142229] transition-all">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://www.instagram.com/hawkstoneglobal" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0F1A21] flex items-center justify-center text-gray-400 hover:text-[#FFB000] hover:bg-[#142229] transition-all">
+              <a href="https://www.instagram.com/hawkstoneglobal?igsh=c2p6dG01dzNqMGRj&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0F1A21] flex items-center justify-center text-gray-400 hover:text-[#FFB000] hover:bg-[#142229] transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -117,9 +117,9 @@ export default function Footer() {
       </div>
 
       <div className="absolute inset-0 pointer-events-none select-none">
-        <div 
+        <div
           className="absolute bottom-0 left-0 right-0 text-[12vw] font-bold text-transparent"
-          style={{ 
+          style={{
             WebkitTextStroke: "1px rgba(255, 176, 0, 0.15)",
             lineHeight: "0.8",
             transform: "translateY(30%)"
@@ -127,7 +127,7 @@ export default function Footer() {
         >
           Hawkstone
         </div>
-              </div>
+      </div>
     </footer>
   );
 }
