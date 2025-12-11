@@ -43,8 +43,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: false }));
 
 let initializationError: any = null;
 
-// Ensure routes are registered
-(async () => {
+let initializationPromise = (async () => {
     try {
         const { registerRoutes } = await import("../server/routes");
         registerRoutes(httpServer, app);
@@ -78,4 +77,7 @@ app.use((_req, res) => {
     res.status(404).json({ message: "API route not found" });
 });
 
-export default app;
+export default async function handler(req: Request, res: Response) {
+    await initializationPromise;
+    return app(req, res);
+}
