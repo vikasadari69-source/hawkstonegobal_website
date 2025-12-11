@@ -95,7 +95,11 @@ app.use((req, res) => {
             url: req.url,
             path: req.path,
             baseUrl: req.baseUrl,
-            originalUrl: req.originalUrl
+            originalUrl: req.originalUrl,
+            initializationError: initializationError ? {
+                message: initializationError.message,
+                stack: initializationError.stack
+            } : null
         }
     });
 });
