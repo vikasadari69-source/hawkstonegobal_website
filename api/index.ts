@@ -41,8 +41,18 @@ app.use(express.urlencoded({ limit: '50mb', extended: false }));
 // If registerRoutes is async, we can't await it at the top level in CommonJS/older Node, but in ES modules we can.
 // The project is "type": "module" in package.json.
 
+// Health check endpoint
+app.get("/api/health", (_req, res) => {
+    res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 // Ensure routes are registered
-registerRoutes(httpServer, app);
+try {
+    registerRoutes(httpServer, app);
+} catch (err) {
+    console.error("Failed to register routes:", err);
+    // We don't exit here so that the health check might still work
+}
 
 // Error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
