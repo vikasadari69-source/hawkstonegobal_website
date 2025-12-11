@@ -42,7 +42,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: false }));
 // The project is "type": "module" in package.json.
 
 // Ensure routes are registered
-await registerRoutes(httpServer, app);
+registerRoutes(httpServer, app);
 
 // Error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
