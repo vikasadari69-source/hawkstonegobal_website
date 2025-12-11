@@ -8,6 +8,7 @@ export function registerRoutes(
   app: Express
 ): Server {
   // put application routes here
+  console.log("Registering routes...");
   // prefix all routes with /api
 
   // use storage to perform CRUD operations on the storage interface

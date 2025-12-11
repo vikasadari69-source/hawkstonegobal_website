@@ -18,6 +18,12 @@ app.use(express.json({
 }));
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 
+// Debug logging middleware
+app.use((req, res, next) => {
+    console.log(`[API Debug] ${req.method} ${req.url} (path: ${req.path}, baseUrl: ${req.baseUrl})`);
+    next();
+});
+
 // Register routes
 // We need to wrap this in an async function because registerRoutes is async
 // and Vercel expects a function export or a listening server.
@@ -47,6 +53,14 @@ let initializationPromise = (async () => {
     try {
         const { registerRoutes } = await import("../server/routes");
         registerRoutes(httpServer, app);
+        console.log("Routes registered successfully");
+
+        // Log all registered routes
+        app._router.stack.forEach((r: any) => {
+            if (r.route && r.route.path) {
+                console.log(`[Route] ${Object.keys(r.route.methods).join(',').toUpperCase()} ${r.route.path}`);
+            }
+        });
     } catch (err) {
         console.error("Failed to register routes:", err);
         initializationError = err;
