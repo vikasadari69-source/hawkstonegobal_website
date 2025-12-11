@@ -15,7 +15,8 @@ export function registerRoutes(
   // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
 
   // Contact form submission endpoint
-  app.post("/api/contact", async (req, res) => {
+  // Register both /api/contact and /contact to handle Vercel rewrites/stripping
+  app.post(["/api/contact", "/contact"], async (req, res) => {
     try {
       const { name, email, phone, company, service, message } = req.body;
 
@@ -100,7 +101,8 @@ export function registerRoutes(
   });
 
   // Careers application submission endpoint
-  app.post("/api/careers", async (req, res) => {
+  // Register both /api/careers and /careers to handle Vercel rewrites/stripping
+  app.post(["/api/careers", "/careers"], async (req, res) => {
     try {
       const { firstName, lastName, email, countryCode, phone, jobTitle, jobId, consent1, consent2, linkedinProfile, resumeFileName, resumeFileType, resumeData } = req.body;
 
