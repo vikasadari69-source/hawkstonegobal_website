@@ -41,12 +41,8 @@ app.use(express.urlencoded({ limit: '50mb', extended: false }));
 // If registerRoutes is async, we can't await it at the top level in CommonJS/older Node, but in ES modules we can.
 // The project is "type": "module" in package.json.
 
-// Health check endpoint
-app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", timestamp: new Date().toISOString() });
-});
+let initializationError: any = null;
 
-// Ensure routes are registered
 // Ensure routes are registered
 (async () => {
     try {
@@ -54,14 +50,32 @@ app.get("/api/health", (_req, res) => {
         registerRoutes(httpServer, app);
     } catch (err) {
         console.error("Failed to register routes:", err);
+        initializationError = err;
     }
 })();
+
+// Health check endpoint
+app.get("/api/health", (_req, res) => {
+    res.json({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        initializationError: initializationError ? {
+            message: initializationError.message,
+            stack: initializationError.stack
+        } : null
+    });
+});
 
 // Error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     res.status(status).json({ message });
+});
+
+// 404 handler for API routes
+app.use((_req, res) => {
+    res.status(404).json({ message: "API route not found" });
 });
 
 export default app;
