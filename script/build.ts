@@ -49,14 +49,13 @@ async function buildAll() {
   await esbuild({
     entryPoints: ["server/index.ts"],
     platform: "node",
-    bundle: true,
+    bundle: false,
     format: "esm",
-    outfile: "dist/api/index.js",
+    outdir: "dist/api",
     define: {
       "process.env.NODE_ENV": '"production"',
     },
-    minify: true,
-    external: [...externals, "path"],
+    minify: false,
     logLevel: "info",
   });
 }
