@@ -56,7 +56,7 @@ async function buildAll() {
       "process.env.NODE_ENV": '"production"',
     },
     minify: true,
-    external: [...externals, "path", "fs", "os", "crypto", "util", "url", "events", "stream", "buffer", "child_process", "cluster", "dgram", "dns", "http", "https", "net", "readline", "repl", "tls", "tty", "zlib", "worker_threads"],
+    external: [...externals, "path"],
     logLevel: "info",
   });
 }
