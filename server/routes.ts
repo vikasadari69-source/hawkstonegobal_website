@@ -41,8 +41,8 @@ export function registerRoutes(
       console.log("Creating email transporter...");
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        port: 465,
-        secure: true, // use SSL
+        port: 587,
+        secure: false, // use TLS
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_APP_PASSWORD,
@@ -129,8 +129,8 @@ export function registerRoutes(
       console.log("Creating email transporter...");
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        port: 465,
-        secure: true, // use SSL
+        port: 587,
+        secure: false, // use TLS
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_APP_PASSWORD,
