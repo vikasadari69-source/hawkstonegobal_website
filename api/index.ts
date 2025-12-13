@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 
 // Register routes with robust error handling for Vercel
 let routesRegistered = false;
+let initializationError: any = null;
 try {
     console.log("Attempting to register routes...");
     registerRoutes(httpServer, app);
