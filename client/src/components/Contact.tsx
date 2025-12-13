@@ -44,23 +44,44 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // todo: remove mock functionality - implement real form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message Sent Successfully",
-      description: "Thank you for your inquiry. Our team will contact you within 24 hours.",
-    });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      service: "",
-      message: "",
-    });
-    setIsSubmitting(false);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send message");
+      }
+
+      toast({
+        title: "Message Sent Successfully",
+        description: "Thank you for your inquiry. Our team will contact you within 24 hours.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({
+        variant: "destructive",
+        title: "Error Sending Message",
+        description: error instanceof Error ? error.message : "Please try again later or contact us directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

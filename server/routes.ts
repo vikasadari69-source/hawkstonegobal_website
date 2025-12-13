@@ -48,8 +48,8 @@ export function registerRoutes(
       });
 
       // Verify transporter configuration
-      await transporter.verify();
-      console.log("Email transporter verified successfully");
+      // await transporter.verify();
+      // console.log("Email transporter verified successfully");
 
       // Find service label
       const serviceLabels: Record<string, string> = {
@@ -134,8 +134,8 @@ export function registerRoutes(
       });
 
       // Verify transporter configuration
-      await transporter.verify();
-      console.log("Email transporter verified successfully");
+      // await transporter.verify();
+      // console.log("Email transporter verified successfully");
 
       // Prepare email content
       let emailContent = `
