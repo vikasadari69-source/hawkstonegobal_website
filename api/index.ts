@@ -24,19 +24,23 @@ app.use((req, res, next) => {
     next();
 });
 
-// Register routes synchronously
-// This replaces the complex async dynamic import which was failing on Vercel
+// Register routes with robust error handling for Vercel
+let routesRegistered = false;
 try {
+    console.log("Attempting to register routes...");
     registerRoutes(httpServer, app);
+    routesRegistered = true;
     console.log("Routes registered successfully");
 } catch (err) {
-    console.error("Failed to register routes:", err);
+    console.error("CRITICIAL: Failed to register routes:", err);
+    // Do not crash the process, but the API will likely fail for specific routes
 }
 
 // Health check endpoint
 app.get("/api/health", (_req, res) => {
     res.json({
         status: "ok",
+        routesRegistered,
         timestamp: new Date().toISOString()
     });
 });
@@ -45,7 +49,7 @@ app.get("/api/health", (_req, res) => {
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-    console.error("API Error:", err);
+    console.error("API Error handled by middleware:", err);
     res.status(status).json({ message });
 });
 
@@ -53,11 +57,8 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 app.use((req, res) => {
     res.status(404).json({
         message: "API route not found",
-        debug: {
-            method: req.method,
-            url: req.url,
-            path: req.path
-        }
+        path: req.path,
+        routesRegistered
     });
 });
 
