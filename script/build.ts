@@ -49,7 +49,8 @@ async function buildAll() {
   await esbuild({
     entryPoints: ["server/index.ts"],
     platform: "node",
-    bundle: false,
+    bundle: true,
+    external: externals,
     format: "esm",
     outdir: "dist/api",
     define: {
