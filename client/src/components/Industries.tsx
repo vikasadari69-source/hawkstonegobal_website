@@ -17,6 +17,7 @@ const industries = [
     description:
       "Powering digital transformation in financial services with expertise in core banking, fintech, regulatory technology, and wealth management solutions. Our professionals bring deep domain knowledge in risk management, trading systems, and payment technologies.",
     image: bfsiImage,
+    stats: ["Fintech", "Risk Management", "Trading Systems", "Payments"],
   },
   {
     id: "retail",
@@ -25,6 +26,7 @@ const industries = [
     description:
       "Enabling omnichannel excellence with expertise in e-commerce platforms, supply chain technology, customer experience systems, and retail analytics. From Shopify to SAP, our talent delivers seamless shopping experiences.",
     image: retailImage,
+    stats: ["E-commerce", "Supply Chain", "CX Systems", "Analytics"],
   },
   {
     id: "automotive",
@@ -33,6 +35,7 @@ const industries = [
     description:
       "Driving the future of mobility with expertise in connected vehicles, autonomous systems, EV technology, and smart manufacturing. Our engineers support Industry 4.0 initiatives across the automotive value chain.",
     image: autoImage,
+    stats: ["Connected Vehicles", "EV Tech", "Smart Manufacturing", "Autonomous"],
   },
   {
     id: "healthcare",
@@ -41,6 +44,7 @@ const industries = [
     description:
       "Advancing healthcare with expertise in health informatics, medical devices, pharmaceutical R&D, and regulatory compliance. Our talent understands HIPAA, FDA requirements, and clinical trial management.",
     image: healthcareImage,
+    stats: ["Health Informatics", "MedTech", "R&D", "Compliance"],
   },
   {
     id: "telecom",
@@ -49,6 +53,7 @@ const industries = [
     description:
       "Connecting the world with expertise in 5G, network infrastructure, OSS/BSS, and telecommunications software. Our professionals support carriers, equipment manufacturers, and service providers globally.",
     image: telecomImage,
+    stats: ["5G", "Network Infra", "OSS/BSS", "VoIP"],
   },
   {
     id: "consulting",
@@ -57,6 +62,7 @@ const industries = [
     description:
       "Enabling digital transformation with expertise across cloud, AI/ML, data engineering, and enterprise architecture. Our consultants partner with leading technology firms to deliver complex transformation programs.",
     image: connectivityImage,
+    stats: ["Cloud", "AI/ML", "Data Engineering", "Enterprise Arch"],
   },
 ];
 
@@ -83,9 +89,8 @@ export default function Industries() {
           {industries.map((industry, index) => (
             <div
               key={industry.id}
-              className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
-                index % 2 === 1 ? "lg:grid-flow-dense" : ""
-              }`}
+              className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${index % 2 === 1 ? "lg:grid-flow-dense" : ""
+                }`}
               data-testid={`industry-${industry.id}`}
             >
               <div className={index % 2 === 1 ? "lg:col-start-2" : ""}>
@@ -102,7 +107,7 @@ export default function Industries() {
                 <span className="text-primary font-semibold text-sm">{industry.subtitle}</span>
                 <h3 className="text-2xl md:text-3xl font-bold text-foreground mt-1 mb-4">{industry.title}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">{industry.description}</p>
-                
+
                 <div className="flex flex-wrap gap-3 mb-6">
                   {industry.stats.map((stat) => (
                     <span
