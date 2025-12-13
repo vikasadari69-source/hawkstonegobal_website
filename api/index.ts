@@ -1,7 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import dotenv from "dotenv";
-import { registerRoutes } from "../server/routes";
+// import { registerRoutes } from "../server/routes";
 
 // Load environment variables
 dotenv.config();
@@ -26,15 +26,19 @@ app.use((req, res, next) => {
 
 // Register routes with robust error handling for Vercel
 let routesRegistered = false;
-try {
-    console.log("Attempting to register routes...");
-    registerRoutes(httpServer, app);
-    routesRegistered = true;
-    console.log("Routes registered successfully");
-} catch (err) {
-    console.error("CRITICIAL: Failed to register routes:", err);
-    // Do not crash the process, but the API will likely fail for specific routes
-}
+(async () => {
+    try {
+        console.log("Attempting to register routes...");
+        // Use dynamic import to catch load-time errors (e.g. missing dependencies)
+        const { registerRoutes } = await import("../server/routes");
+        registerRoutes(httpServer, app);
+        routesRegistered = true;
+        console.log("Routes registered successfully");
+    } catch (err) {
+        console.error("CRITICAL: Failed to register routes:", err);
+        // Do not crash the process, but the API will likely fail for specific routes
+    }
+})();
 
 // Health check endpoint
 app.get("/api/health", (_req, res) => {
