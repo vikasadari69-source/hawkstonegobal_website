@@ -66,7 +66,7 @@ app.post("/api/contact", async (req, res) => {
 
         // Create email transporter using Gmail with timeout
         console.log("Creating email transporter...");
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
             secure: false, // use TLS
