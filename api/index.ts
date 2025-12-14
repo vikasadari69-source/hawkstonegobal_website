@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 
 // Load environment variables
 dotenv.config();
@@ -61,8 +62,7 @@ app.post("/api/contact", async (req, res) => {
             });
         }
 
-        // Import nodemailer dynamically
-        const nodemailer = require("nodemailer");
+        // Import nodemailer dynamically - already imported at top
 
         // Create email transporter using Gmail with timeout
         console.log("Creating email transporter...");
