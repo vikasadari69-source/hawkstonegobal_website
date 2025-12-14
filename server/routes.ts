@@ -18,6 +18,10 @@ export function registerRoutes(
   // Register both /api/contact and /contact to handle Vercel rewrites/stripping
   app.post(["/api/contact", "/contact"], async (req, res) => {
     try {
+      console.log("Contact form endpoint hit:", req.method, req.url);
+      console.log("Request headers:", req.headers);
+      console.log("Request body:", req.body);
+
       const { name, email, phone, company, service, message } = req.body;
 
       console.log("Contact form submission received:", { name, email, service });
@@ -96,9 +100,19 @@ export function registerRoutes(
 
     } catch (error) {
       console.error("Error sending contact email:", error);
-      res.status(500).json({
-        message: "Failed to send contact form. Please try again later."
-      });
+      console.error("Error stack:", error.stack);
+      
+      // Always return a JSON response, even in error cases
+      try {
+        res.status(500).json({
+          message: "Failed to send contact form. Please try again later.",
+          error: error instanceof Error ? error.message : "Unknown error"
+        });
+      } catch (jsonError) {
+        console.error("Failed to send JSON response:", jsonError);
+        // Fallback response if JSON serialization fails
+        res.status(500).set('Content-Type', 'application/json').end('{"message":"Internal server error"}');
+      }
     }
   });
 
